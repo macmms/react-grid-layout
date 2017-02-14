@@ -37,6 +37,7 @@ export default class GridItem extends React.Component {
     h: PropTypes.number.isRequired,
 
     // All optional
+    lockAspectRatio: PropTypes.bool.isRequired,
     minW: function (props, propName, componentName) {
       const value = props[propName];
       if (typeof value !== 'number') return new Error('minWidth not Number');
@@ -94,7 +95,8 @@ export default class GridItem extends React.Component {
     minH: 1,
     minW: 1,
     maxH: Infinity,
-    maxW: Infinity
+    maxW: Infinity,
+    lockAspectRatio: false
   };
 
   state: State = {
@@ -179,7 +181,7 @@ export default class GridItem extends React.Component {
    * @return {Object} w, h as grid units.
    */
   calcWH({height, width}: {height: number, width: number}): {w: number, h: number} {
-    const {margin, maxRows, cols, rowHeight, x, y} = this.props;
+    const {margin, maxRows, cols, rowHeight, x, y, minW, minH, lockAspectRatio} = this.props;
     const colWidth = this.calcColWidth();
 
     // width = colWidth * w - (margin * (w - 1))
@@ -191,6 +193,18 @@ export default class GridItem extends React.Component {
     // Capping
     w = Math.max(Math.min(w, cols - x), 0);
     h = Math.max(Math.min(h, maxRows - y), 0);
+    if(lockAspectRatio && w/h != minW/minH) {
+      var modW = w%minW;
+      var modH = h%minH;
+      if(modW > 0) {
+        w = w - modW;
+        h = w/(minW/minH);
+      } else if(modH > 0) {
+        h = h - modH;
+        w = h/(minH/minW);
+      }
+    }
+
     return {w, h};
   }
 
@@ -251,7 +265,7 @@ export default class GridItem extends React.Component {
    * @return {Element}          Child wrapped in Resizable.
    */
   mixinResizable(child: React.Element<any>, position: Position): React.Element<any> {
-    const {cols, x, minW, minH, maxW, maxH} = this.props;
+    const {cols, x, minW, minH, maxW, maxH, lockAspectRatio} = this.props;
 
     // This is the max possible width - doesn't go to infinity because of the width of the window
     const maxWidth = this.calcPosition(0, 0, cols - x, 0).width;
@@ -267,6 +281,7 @@ export default class GridItem extends React.Component {
         height={position.height}
         minConstraints={minConstraints}
         maxConstraints={maxConstraints}
+        lockAspectRatio={lockAspectRatio}
         onResizeStop={this.onResizeHandler('onResizeStop')}
         onResizeStart={this.onResizeHandler('onResizeStart')}
         onResize={this.onResizeHandler('onResize')}>

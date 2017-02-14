@@ -238,7 +238,7 @@ export default class ReactGridLayout extends React.Component {
 
     // Create placeholder (display only)
     var placeholder = {
-      w: l.w, h: l.h, x: l.x, y: l.y, placeholder: true, i: i
+      w: l.w, h: l.h, x: l.x, y: l.y, lockAspectRatio: l.lockAspectRatio, placeholder: true, i: i
     };
 
     // Move the element to the dragged location.
@@ -363,6 +363,7 @@ export default class ReactGridLayout extends React.Component {
         x={activeDrag.x}
         y={activeDrag.y}
         i={activeDrag.i}
+        lockAspectRatio={activeDrag.lockAspectRatio}
         className="react-grid-placeholder"
         containerWidth={width}
         cols={cols}
@@ -422,6 +423,7 @@ export default class ReactGridLayout extends React.Component {
         x={l.x}
         y={l.y}
         i={l.i}
+        lockAspectRatio={l.lockAspectRatio}
         minH={l.minH}
         minW={l.minW}
         maxH={l.maxH}

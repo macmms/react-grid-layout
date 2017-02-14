@@ -85,10 +85,13 @@ function generateLayout() {
     return {
       x: _.random(0, 5) * 2 % 12,
       y: Math.floor(i / 6) * y,
-      w: 2,
+      w: 1,
       h: y,
       i: i.toString(),
-      static: Math.random() < 0.05
+      static: Math.random() < 0.05,
+      lockAspectRatio: true,
+      minW: 1,
+      minH: y
     };
   });
 }
