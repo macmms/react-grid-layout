@@ -36,6 +36,7 @@ export type Props = {
   maxRows: number,
   isDraggable: boolean,
   isResizable: boolean,
+  lockAspectRatio: boolean,
   useCSSTransforms: boolean,
 
   // Callbacks

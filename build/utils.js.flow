@@ -6,7 +6,8 @@ export type LayoutItem = {
   w: number, h: number, x: number, y: number, i: string,
   minW?: number, minH?: number, maxW?: number, maxH?: number,
   moved?: boolean, static?: boolean,
-  isDraggable?: ?boolean, isResizable?: ?boolean
+  isDraggable?: ?boolean, isResizable?: ?boolean, lockAspectRatio?: boolean,
+
 };
 export type Layout = Array<LayoutItem>;
 export type Position = {left: number, top: number, width: number, height: number};
