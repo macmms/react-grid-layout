@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
@@ -42,8 +46,8 @@ var WidthProvider = function WidthProvider(ComposedComponent) {
         width: 1280
       }, _this.mounted = false, _this.onWindowResize = function (_event) {
         if (!_this.mounted) return;
-        var node = _reactDom2.default.findDOMNode(_this);
-        _this.setState({ width: node.offsetWidth });
+        var node = _reactDom2.default.findDOMNode(_this); // Flow casts this to Text | Element
+        if (node instanceof HTMLElement) _this.setState({ width: node.offsetWidth });
       }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
@@ -76,7 +80,7 @@ var WidthProvider = function WidthProvider(ComposedComponent) {
   }, _class.propTypes = {
     // If true, will not render children until mounted. Useful for getting the exact width before
     // rendering, to prevent any unsightly resizing.
-    measureBeforeMount: _react2.default.PropTypes.bool
+    measureBeforeMount: _propTypes2.default.bool
   }, _temp2;
 };
 

@@ -36,6 +36,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// All callbacks are of the signature (layout, oldItem, newItem, placeholder, e).
 var isProduction = process.env.NODE_ENV === 'production';
 
 /**
@@ -78,6 +79,7 @@ function cloneLayoutItem(layoutItem) {
  * This will catch differences in keys, order, and length.
  */
 function childrenEqual(a, b) {
+  // $FlowIgnore: Appears to think map calls back w/array
   return (0, _lodash2.default)(_react2.default.Children.map(a, function (c) {
     return c.key;
   }), _react2.default.Children.map(b, function (c) {
@@ -398,7 +400,7 @@ function synchronizeLayoutWithChildren(initialLayout, children, cols, verticalCo
   var layout = [];
   _react2.default.Children.forEach(children, function (child, i) {
     // Don't overwrite if it already exists.
-    var exists = getLayoutItem(initialLayout, child.key || "1" /* FIXME satisfies Flow */);
+    var exists = getLayoutItem(initialLayout, String(child.key));
     if (exists) {
       layout[i] = cloneLayoutItem(exists);
     } else {
@@ -417,7 +419,7 @@ function synchronizeLayoutWithChildren(initialLayout, children, cols, verticalCo
         layout[i] = cloneLayoutItem(_extends({}, g, { i: child.key }));
       } else {
         // Nothing provided: ensure this is added to the bottom
-        layout[i] = cloneLayoutItem({ w: 1, h: 1, x: 0, y: bottom(layout), i: child.key || "1" });
+        layout[i] = cloneLayoutItem({ w: 1, h: 1, x: 0, y: bottom(layout), i: String(child.key) });
       }
     }
   });

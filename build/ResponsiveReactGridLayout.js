@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _lodash = require('lodash.isequal');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -171,13 +175,13 @@ ResponsiveReactGridLayout.propTypes = {
 
   // Optional, but if you are managing width yourself you may want to set the breakpoint
   // yourself as well.
-  breakpoint: _react2.default.PropTypes.string,
+  breakpoint: _propTypes2.default.string,
 
   // {name: pxVal}, e.g. {lg: 1200, md: 996, sm: 768, xs: 480}
-  breakpoints: _react2.default.PropTypes.object,
+  breakpoints: _propTypes2.default.object,
 
   // # of cols. This is a breakpoint -> cols map
-  cols: _react2.default.PropTypes.object,
+  cols: _propTypes2.default.object,
 
   // layouts is an object mapping breakpoints to layouts.
   // e.g. {lg: Layout, md: Layout, ...}
@@ -196,21 +200,21 @@ ResponsiveReactGridLayout.propTypes = {
 
   // The width of this component.
   // Required in this propTypes stanza because generateInitialState() will fail without it.
-  width: _react2.default.PropTypes.number.isRequired,
+  width: _propTypes2.default.number.isRequired,
 
   //
   // Callbacks
   //
 
   // Calls back with breakpoint and new # cols
-  onBreakpointChange: _react2.default.PropTypes.func,
+  onBreakpointChange: _propTypes2.default.func,
 
   // Callback so you can save the layout.
   // Calls back with (currentLayout, allLayouts). allLayouts are keyed by breakpoint.
-  onLayoutChange: _react2.default.PropTypes.func,
+  onLayoutChange: _propTypes2.default.func,
 
   // Calls back with (containerWidth, margin, cols, containerPadding)
-  onWidthChange: _react2.default.PropTypes.func
+  onWidthChange: _propTypes2.default.func
 };
 ResponsiveReactGridLayout.defaultProps = {
   breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
