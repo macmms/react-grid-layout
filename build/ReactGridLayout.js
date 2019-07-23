@@ -8,6 +8,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _lodash = require('lodash.isequal');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -323,7 +327,7 @@ var ReactGridLayout = function (_React$Component) {
 
   ReactGridLayout.prototype.processGridItem = function processGridItem(child) {
     if (!child.key) return;
-    var l = (0, _utils.getLayoutItem)(this.state.layout, child.key);
+    var l = (0, _utils.getLayoutItem)(this.state.layout, String(child.key));
     if (!l) return null;
     var _props2 = this.props,
         width = _props2.width,
@@ -397,6 +401,8 @@ var ReactGridLayout = function (_React$Component) {
     return _react2.default.createElement(
       'div',
       { className: (0, _classnames2.default)('react-grid-layout', className), style: mergedStyle },
+
+      // $FlowIgnore: Appears to think map calls back w/array
       _react2.default.Children.map(this.props.children, function (child) {
         return _this2.processGridItem(child);
       }),
@@ -412,26 +418,26 @@ ReactGridLayout.propTypes = {
   //
   // Basic props
   //
-  className: _react.PropTypes.string,
-  style: _react.PropTypes.object,
+  className: _propTypes2.default.string,
+  style: _propTypes2.default.object,
 
   // This can be set explicitly. If it is not set, it will automatically
   // be set to the container width. Note that resizes will *not* cause this to adjust.
   // If you need that behavior, use WidthProvider.
-  width: _react.PropTypes.number,
+  width: _propTypes2.default.number,
 
   // If true, the container height swells and contracts to fit contents
-  autoSize: _react.PropTypes.bool,
+  autoSize: _propTypes2.default.bool,
   // # of cols.
-  cols: _react.PropTypes.number,
+  cols: _propTypes2.default.number,
 
   // A selector that will not be draggable.
-  draggableCancel: _react.PropTypes.string,
+  draggableCancel: _propTypes2.default.string,
   // A selector for the draggable handler
-  draggableHandle: _react.PropTypes.string,
+  draggableHandle: _propTypes2.default.string,
 
   // If true, the layout will compact vertically
-  verticalCompact: _react.PropTypes.bool,
+  verticalCompact: _propTypes2.default.bool,
 
   // layout is an array of object with the format:
   // {x: Number, y: Number, w: Number, h: Number, i: String}
@@ -447,46 +453,46 @@ ReactGridLayout.propTypes = {
   //
 
   // Margin between items [x, y] in px
-  margin: _react.PropTypes.arrayOf(_react.PropTypes.number),
+  margin: _propTypes2.default.arrayOf(_propTypes2.default.number),
   // Padding inside the container [x, y] in px
-  containerPadding: _react.PropTypes.arrayOf(_react.PropTypes.number),
+  containerPadding: _propTypes2.default.arrayOf(_propTypes2.default.number),
   // Rows have a static height, but you can change this based on breakpoints if you like
-  rowHeight: _react.PropTypes.number,
+  rowHeight: _propTypes2.default.number,
   // Default Infinity, but you can specify a max here if you like.
   // Note that this isn't fully fleshed out and won't error if you specify a layout that
   // extends beyond the row capacity. It will, however, not allow users to drag/resize
   // an item past the barrier. They can push items beyond the barrier, though.
   // Intentionally not documented for this reason.
-  maxRows: _react.PropTypes.number,
+  maxRows: _propTypes2.default.number,
 
   //
   // Flags
   //
-  isDraggable: _react.PropTypes.bool,
-  isResizable: _react.PropTypes.bool,
+  isDraggable: _propTypes2.default.bool,
+  isResizable: _propTypes2.default.bool,
   // Use CSS transforms instead of top/left
-  useCSSTransforms: _react.PropTypes.bool,
+  useCSSTransforms: _propTypes2.default.bool,
 
   //
   // Callbacks
   //
 
   // Callback so you can save the layout. Calls after each drag & resize stops.
-  onLayoutChange: _react.PropTypes.func,
+  onLayoutChange: _propTypes2.default.func,
 
-  // Calls when drag starts. Callback is of the signature (layout, oldItem, newItem, placeholder, e).
+  // Calls when drag starts. Callback is of the signature (layout, oldItem, newItem, placeholder, e, ?node).
   // All callbacks below have the same signature. 'start' and 'stop' callbacks omit the 'placeholder'.
-  onDragStart: _react.PropTypes.func,
+  onDragStart: _propTypes2.default.func,
   // Calls on each drag movement.
-  onDrag: _react.PropTypes.func,
+  onDrag: _propTypes2.default.func,
   // Calls when drag is complete.
-  onDragStop: _react.PropTypes.func,
+  onDragStop: _propTypes2.default.func,
   //Calls when resize starts.
-  onResizeStart: _react.PropTypes.func,
+  onResizeStart: _propTypes2.default.func,
   // Calls when resize movement happens.
-  onResize: _react.PropTypes.func,
+  onResize: _propTypes2.default.func,
   // Calls when resize is complete.
-  onResizeStop: _react.PropTypes.func,
+  onResizeStop: _propTypes2.default.func,
 
   //
   // Other validations
@@ -500,7 +506,7 @@ ReactGridLayout.propTypes = {
     var keys = {};
     _react2.default.Children.forEach(children, function (child) {
       if (keys[child.key]) {
-        throw new Error("Duplicate child key found! This will cause problems in ReactGridLayout.");
+        throw new Error("Duplicate child key \"" + child.key + "\" found! This will cause problems in ReactGridLayout.");
       }
       keys[child.key] = true;
     });
